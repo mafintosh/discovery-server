@@ -1,0 +1,26 @@
+{
+  "name": "discovery-server",
+  "version": "0.0.0",
+  "description": "A tcp/utp server that auto announces itself using discovery-channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "dependencies": {
+    "discovery-channel": "^5.4.6",
+    "utp-native": "^1.6.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/discovery-server.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/discovery-server/issues"
+  },
+  "homepage": "https://github.com/mafintosh/discovery-server"
+}

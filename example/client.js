@@ -17,4 +17,3 @@ dc.on('peer', function (key, peer) {
 })
 
 dc.join('hello-world-server')
-

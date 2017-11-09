@@ -16,7 +16,7 @@ function Server (opts, onconn) {
   }
 
   if (!opts) opts = {}
-  if (!opts.socket) opts.socket = utp()
+  if (!opts.socket && opts.utp !== false) opts.socket = utp()
 
   if (onconn) {
     this.on('connection', onconn)
@@ -29,7 +29,7 @@ function Server (opts, onconn) {
 
   this.listening = false
   this.tcp = net.createServer(onconnection)
-  this.utp = opts.socket.on('connection', onconnection)
+  this.utp = opts.socket ? opts.socket.on('connection', onconnection) : null
   this.channel = dc(opts)
 
   function onconnection (socket) {
@@ -70,7 +70,8 @@ Server.prototype._listen = function (port) {
 
   function ontcplisten () {
     tcpListening = true
-    self.utp.listen(self.tcp.address().port, onutplisten)
+    if (self.utp) self.utp.listen(self.tcp.address().port, onutplisten)
+    else onutplisten()
   }
 
   function onutplisten () {
@@ -89,6 +90,7 @@ Server.prototype._listen = function (port) {
   function cleanup () {
     self.tcp.removeListener('listening', ontcplisten)
     self.tcp.removeListener('error', onerror)
+    if (!self.utp) return
     self.utp.removeListener('listening', onutplisten)
     self.utp.removeListener('error', onerror)
   }
@@ -104,9 +106,9 @@ Server.prototype.close = function (onclose) {
   this._whenListening(function (err) {
     if (err) return
 
-    var missing = 2
+    var missing = self.utp ? 2 : 1
 
-    self.utp.close(onclose)
+    if (self.utp) self.utp.close(onclose)
     self.tcp.close(onclose)
 
     function onclose () {

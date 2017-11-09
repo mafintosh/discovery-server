@@ -48,7 +48,7 @@ dc.join('hello-world-server')
 
 #### `var server = createServer([discoveryOptions], [onconnection])`
 
-Create a new tcp + utp server. `discoveryOptions` are forwarded to the [discovery-channel](https://github.com/maxogden/discovery-channel) constructor.
+Create a new tcp + utp server. `discoveryOptions` are forwarded to the [discovery-channel](https://github.com/maxogden/discovery-channel) constructor. In addition you can set `{utp: false}` to disable utp and only use tcp
 
 Optionally you can pass a `onconnection` listener
 
